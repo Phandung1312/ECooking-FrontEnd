@@ -17,7 +17,7 @@ const authService = {
                             type: "success"
                         });
                     }
-                    this.nextHomePage();
+                    this.nextUserPage();
                     return response.data.data;
                 } else if (response.status === 202) {
                     if (notifyCallback) {
@@ -73,20 +73,21 @@ const authService = {
 
     async logout(notifyCallback) {
         try {
-            const response = await axios.post("/auth/logout");
-            if (response.status === 200) {
-                localStorage.removeItem("user");
-                if (notifyCallback) {
-                    notifyCallback({
-                        title: "Success",
-                        text: "Logout successfully",
-                        type: "success"
-                    });
-                }
-                this.nextLoginPage();
-            } else {
-                console.error("Unexpected status code:", response.status);
-            }
+            // const response = await axios.post("/auth/logout");
+            // if (response.status === 200) {
+            //     localStorage.removeItem("user");
+            //     if (notifyCallback) {
+            //         notifyCallback({
+            //             title: "Success",
+            //             text: "Logout successfully",
+            //             type: "success"
+            //         });
+            //     }
+            //     this.nextLoginPage();
+            // } else {
+            //     console.error("Unexpected status code:", response.status);
+            // }
+            this.nextLoginPage();
         } catch (error) {
             if (error.response) {
                 const errorData = error.response.data;
@@ -105,8 +106,8 @@ const authService = {
         }
     },
 
-    nextHomePage() {
-        router.push({ name: "Home" });
+    nextUserPage() {
+        router.push({ name: "UserList" });
     },
 
     nextLoginPage() {

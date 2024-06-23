@@ -8,17 +8,17 @@ const userService = {
     async getUserList(filterParams) {
         try {
             const params = new URLSearchParams();
-            params.append('keyword', filterParams.keyword);
-            params.append('searchField', filterParams.searchField);
-            params.append('isActive', filterParams.active === 'all' ? '' : filterParams.active);
-            params.append('sortType', filterParams.sortType);
-            params.append('sortField', filterParams.sortField);
+            params.append('value', filterParams.keyword);
+            params.append('type', filterParams.searchField);
+            params.append('status', filterParams.status === 'all' ? '' : filterParams.status);
+            // params.append('sortType', filterParams.sortType);
+            // params.append('sortField', filterParams.sortField);
             params.append('page', filterParams.page);
-            params.append('size', filterParams.size);
-            const urlWithParams = `users/search?${params.toString()}`;
+            params.append('perPage', filterParams.size);
+            const urlWithParams = `/accounts?${params.toString()}`;
             const response = await axios.get(urlWithParams);
             return response.data;
-        } catch (error) {
+        } catch (error) {   
             this.handleError(error);
             throw new Error();
         }
@@ -80,7 +80,7 @@ const userService = {
 
     async blockUser(id, notifyCallback) {
         try {
-            const url = `users/${id}`;
+            const url = `accounts/${id}`;
             const response = await axios.delete(url);
             if (response.status === 200) {
                 notifyCallback({
@@ -88,8 +88,16 @@ const userService = {
                     text: "Block user success",
                     type: "success",
                 });
+                return 'ok';
             }
-            return response.data;
+            else{
+                notifyCallback({
+                    title: "Fail",
+                    text: "Block user fail",
+                    type: "error",
+                });
+                return 'fail';
+            }
         } catch (error) {
             this.handleError(error, notifyCallback);
             throw new Error();
@@ -98,7 +106,7 @@ const userService = {
 
     async unBlockUser(id, notifyCallback) {
         try {
-            const url = `users/unblock/${id}`;
+            const url = `accounts/unblock/${id}`;
             const response = await axios.patch(url);
             if (response.status === 200) {
                 notifyCallback({
@@ -106,8 +114,16 @@ const userService = {
                     text: "Unblock user success",
                     type: "success"
                 });
+                return 'ok';
             }
-            return response.data;
+            else{
+                notifyCallback({
+                    title: "Fail",
+                    text: "Unblock user fail",
+                    type: "error",
+                });
+                return 'fail';
+            }
         } catch (error) {
             this.handleError(error, notifyCallback);
             throw new Error();

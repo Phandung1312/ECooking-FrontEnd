@@ -2,14 +2,15 @@ import axios from "axios";
 import tokenService from "../services/TokenService";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/",
+  baseURL: "https://ecooking-server.onrender.com/admin",
+  // baseURL: "http://192.168.1.19:3333/admin",
   timeout: 5000,
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
     const storedUserData = JSON.parse(window.localStorage.getItem("user"));
-    const token = storedUserData ? storedUserData.token : null;
+    const token = storedUserData ? storedUserData.accessToken : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -34,7 +35,7 @@ axiosInstance.interceptors.response.use(
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
         try {
-          const rs = await axiosInstance.post("/auth/refreshtoken", {
+          const rs = await axiosInstance.post("/auth/refresh", {
             refreshToken: tokenService.getLocalRefreshToken(),
           });
           const { accessToken } = rs.data.data;
@@ -42,7 +43,7 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(originalConfig);
         } catch (_error) {
           tokenService.removeUser();
-          tokenService.handleExpiredRefreshToken(); //todo: notifications
+          tokenService.handleExpiredRefreshToken(); 
           return Promise.reject(_error);
         }
       }

@@ -10,7 +10,8 @@ import ChangePassword from "../views/user/ChangePassword.vue"
 import ListEvents from "../views/event/ListEvents.vue";
 import ListCustomers from "../views/customer/ListCustomers.vue";
 import UserProfile from "../views/user/UserProfile.vue"
-import ProductList from "../views/product/ProductList.vue";
+import RecipeList from "../views/product/RecipeList.vue";
+import ReportList from "../views/report/ReportList.vue";
 
 const authUser = (to, from, next) => {
   const user = localStorage.getItem("user");
@@ -26,17 +27,14 @@ const router = createRouter({
   routes: [
     {
       path: "/",
+      redirect: "/users",
       component: Layout,
       beforeEnter: authUser,
       children: [
-        { path: "", component: Home, name: "Home" },
-        { path: "/files/upload", component: UploadFile, name: "UploadFile" },
-        { path: "/files", component: ListFiles, name: "ListFiles" },
         { path: "/users", component: UserList, name: "UserList" },
-        { path: "/events", component: ListEvents, name: "ListEvents" },
-        { path: "/users/profile", component: UserProfile, name: "UserProfile" },
-        { path: "/products", component: ProductList, name: "ProductList" },
-        { path: "/customers", component: ListCustomers, name: "ListCustomers"},
+        { path: "/recipes", component: RecipeList, name: "RecipeList" },
+        { path: "/reports", component: ReportList, name: "ReportList" },
+
       ],
     },
     {

@@ -60,7 +60,6 @@ export default {
 
   computed: {
     getUserAvatar() {
-      console.log(1);
       console.log(this.$store.state.user.avatarUrl);
       return this.$store.state.user.avatarUrl || this.defaultAvatarUrl ;
     },
@@ -93,12 +92,12 @@ export default {
 
     getCurrentUser() {
       const id = tokenService.getUser().id
-      userService.getUserById(id, this.notify)
-        .then(response => {
-          this.$store.commit('updateUserProfile', response.data);
-        }).catch(e => {
-          console.log(e);
-        })
+      // userService.getUserById(id, this.notify)
+      //   .then(response => {
+      //     this.$store.commit('updateUserProfile', response.data);
+      //   }).catch(e => {
+      //     console.log(e);
+      //   })
     },
 
     notify({ title, text, type }) {
