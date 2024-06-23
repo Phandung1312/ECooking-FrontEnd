@@ -2,7 +2,7 @@ import axios from "axios";
 import tokenService from "../services/TokenService";
 
 const axiosInstance = axios.create({
-  baseURL: "https://ecooking.up.railway.app",
+  baseURL: "https://ecooking.up.railway.app/admin",
   // baseURL: "http://192.168.1.19:3333/admin",
   timeout: 5000,
 });
