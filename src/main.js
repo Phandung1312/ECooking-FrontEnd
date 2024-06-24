@@ -5,7 +5,7 @@ import App from "./App.vue";
 import Notifications from '@kyvg/vue3-notification'
 import Swal from 'sweetalert2'
 import axios from "./plugins/axios";
-import store from "./stores/store";
+import store from "./stores/Store";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas} from '@fortawesome/free-solid-svg-icons';

@@ -220,7 +220,7 @@
 
 <script>
 import DropMenu from "../../components/DropMenu.vue";
-import reportService from "../../services/reportService";
+import reportService from "../../services/ReportService";
 export default {
   setup() {
     document.title = "List Reports - ECooking";
